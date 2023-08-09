@@ -6,7 +6,8 @@
 		connect_registry_to_kind create_kind_cluster_with_registry \
 		delete_kind_cluster delete_kind_cluster_with_registry \
 		delete_docker_registry create_deployment \
-		create_service create_ingress ingress_controller_setup
+		create_service create_ingress ingress_controller_setup \
+		install_app
 
 run_website:
 	docker build -t explorecalifornia.com . && \
@@ -69,3 +70,6 @@ ingress_controller_setup:
 	--for=condition=ready pod \
 	--selector=app.kubernetes.io/component=controller \
 	--timeout=90s
+
+install_app:
+	helm upgrade --atomic --install explore-california-website ./chart
