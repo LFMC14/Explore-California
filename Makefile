@@ -56,13 +56,13 @@ delete_kind_cluster_with_registry:
 	$(MAKE) delete_kind_cluster && $(MAKE) delete_docker_registry
 
 create_deployment:
-	kubectl apply -f deployment.yaml
+	kubectl apply -f "/mnt/c/Users/fa_na/OneDrive/Documents/DevOps/Kubernetes/Kubernetes - Your First Project/Ex_Files__Kubernetes_Your_First_Project/Exercise Files/05_08_after/deployment.yaml"
 
 create_service:
-	kubectl apply -f service.yaml
+	kubectl apply -f "/mnt/c/Users/fa_na/OneDrive/Documents/DevOps/Kubernetes/Kubernetes - Your First Project/Ex_Files__Kubernetes_Your_First_Project/Exercise Files/05_08_after/service.yaml"
 
 create_ingress: ingress_controller_setup
-	kubectl apply -f ingress.yaml
+	kubectl apply -f "/mnt/c/Users/fa_na/OneDrive/Documents/DevOps/Kubernetes/Kubernetes - Your First Project/Ex_Files__Kubernetes_Your_First_Project/Exercise Files/05_08_after/ingress.yaml"
 
 ingress_controller_setup:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
