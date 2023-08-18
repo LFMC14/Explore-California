@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.appName }}
 spec:
   rules:
-  - host: {{ .Values.appName }}
+  - host: {{ .Values.serviceAddress }}
     http:
       paths:
       - backend:

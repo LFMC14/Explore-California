@@ -71,5 +71,6 @@ ingress_controller_setup:
 	--selector=app.kubernetes.io/component=controller \
 	--timeout=90s
 
-install_app:
+install_app: ingress_controller_setup
+	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind
 	helm upgrade --atomic --install explore-california-website ./chart
