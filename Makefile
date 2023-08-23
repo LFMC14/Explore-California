@@ -7,7 +7,7 @@
 		delete_kind_cluster delete_kind_cluster_with_registry \
 		delete_docker_registry create_deployment \
 		create_service create_ingress ingress_controller_setup \
-		install_app
+		install_app uninstall_app
 
 run_website:
 	docker build -t explorecalifornia.com . && \
@@ -71,6 +71,11 @@ ingress_controller_setup:
 	--selector=app.kubernetes.io/component=controller \
 	--timeout=90s
 
-install_app: ingress_controller_setup
-	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind
+install_app: 
+	$(MAKE) create_kind_cluster && $(MAKE) connect_registry_to_kind && $(MAKE) ingress_controller_setup
 	helm upgrade --atomic --install explore-california-website ./chart
+
+uninstall_app:
+	helm uninstall explore-california-website
+	$(MAKE) delete_kind_cluster && $(MAKE) delete_docker_registry
+	

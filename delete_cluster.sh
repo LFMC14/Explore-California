@@ -26,6 +26,8 @@ terraform() {
     -e "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN" \
     -e "AWS_REGION=$AWS_REGION" \
     -e "TF_IN_AUTOMATION=true" \
+    -v "tfdata:/tfdata" \
+    -e TF_DATA_DIR=/tfdata \
     -v "$PWD:/work" -w /work "$TERRAFORM_DOCKER_IMAGE" "$@"
 }
 
@@ -77,4 +79,4 @@ then
   >&2 echo "ERROR: S3 bucket does not exist: $TERRAFORM_S3_BUCKET/$TERRAFORM_S3_KEY"
   exit 1
 fi
-initialize_terraform && delete_awslbic_policy && delete_cluster
+initialize_terraform && delete_cluster && delete_awslbic_policy 

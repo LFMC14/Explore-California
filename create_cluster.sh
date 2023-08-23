@@ -23,6 +23,8 @@ terraform() {
     -e "AWS_REGION=$AWS_REGION" \
     -e "TF_IN_AUTOMATION=true" \
     -v "$HOME/.kube:/root/.kube" \
+    -v "tfdata:/tfdata" \
+    -e TF_DATA_DIR=/tfdata \
     -v "$PWD:/work" -w /work "$TERRAFORM_DOCKER_IMAGE" "$@"
 }
 
@@ -131,6 +133,8 @@ install_alb_ingress_controller() {
   }
 
   _install_awslbic() {
+    helm repo add eks https://aws.github.io/eks-charts
+    helm repo update
     helm upgrade -i aws-load-balancer-controller eks/aws-load-balancer-controller \
       --set clusterName="explore-california-cluster" \
       --set serviceAccount.create=false \
@@ -147,7 +151,7 @@ install_alb_ingress_controller() {
 
   _create_oidc_provider &&
   policy_arn=$(_create_or_get_policy)
-  _create_service_account "$policy_arn" &&
+  #_create_service_account "$policy_arn" &&
     _install_crds &&
     _install_awslbic
 }
